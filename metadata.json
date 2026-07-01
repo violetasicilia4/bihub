@@ -1,0 +1,6 @@
+{
+  "name": "adyr bi hub",
+  "description": "Un hub simple para encontrar dashboards por vertical, métrica o equipo con link directo y contexto de uso.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
