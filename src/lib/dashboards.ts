@@ -7,9 +7,7 @@ interface DashboardRow {
   vertical: Dashboard['vertical'];
   description: string;
   url: string;
-  owner: string;
   update_frequency: Dashboard['updateFrequency'];
-  status: Dashboard['status'];
   metrics: string[];
   tags: string[];
   last_updated: string | null;
@@ -23,9 +21,7 @@ function fromRow(row: DashboardRow): Dashboard {
     vertical: row.vertical,
     description: row.description,
     url: row.url,
-    owner: row.owner,
     updateFrequency: row.update_frequency,
-    status: row.status,
     metrics: row.metrics ?? [],
     tags: row.tags ?? [],
     lastUpdated: row.last_updated ?? undefined,
@@ -40,9 +36,7 @@ function toRow(dash: Dashboard): Omit<DashboardRow, 'id'> & { id?: string } {
     vertical: dash.vertical,
     description: dash.description,
     url: dash.url,
-    owner: dash.owner,
     update_frequency: dash.updateFrequency,
-    status: dash.status,
     metrics: dash.metrics,
     tags: dash.tags,
     last_updated: dash.lastUpdated ?? null,

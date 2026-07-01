@@ -192,13 +192,12 @@ export default function App() {
         return false;
       }
 
-      // 2. Text Search Query Filter (Matches Name, Description, Owner, Vertical, Metrics, Tags)
+      // 2. Text Search Query Filter (Matches Name, Description, Vertical, Metrics, Tags)
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase().trim();
-        const matchesQuery = 
+        const matchesQuery =
           dash.name.toLowerCase().includes(query) ||
           dash.description.toLowerCase().includes(query) ||
-          dash.owner.toLowerCase().includes(query) ||
           dash.vertical.toLowerCase().includes(query) ||
           dash.metrics.some(m => m.toLowerCase().includes(query)) ||
           dash.tags.some(t => t.toLowerCase().includes(query));
@@ -229,14 +228,12 @@ export default function App() {
   // Statistics calculation
   const stats = useMemo(() => {
     const total = dashboards.length;
-    const active = dashboards.filter(d => d.status.toLowerCase() === 'activo' || d.status.toLowerCase() === 'active').length;
-    const inReview = dashboards.filter(d => d.status.toLowerCase() === 'en revisión' || d.status.toLowerCase() === 'under review').length;
     const devCount = dashboards.filter(d => d.vertical === 'Desarrollo').length;
     const retCount = dashboards.filter(d => d.vertical === 'Retención').length;
     const acqCount = dashboards.filter(d => d.vertical === 'Adquisición').length;
     const crossCount = dashboards.filter(d => d.vertical === 'Cross equipo').length;
 
-    return { total, active, inReview, devCount, retCount, acqCount, crossCount };
+    return { total, devCount, retCount, acqCount, crossCount };
   }, [dashboards]);
 
   const tabsList: { value: TabType; count: number }[] = [

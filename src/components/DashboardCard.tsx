@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ExternalLink, Key, Eye, Clock, User, AlertTriangle, Pencil, Trash2 } from 'lucide-react';
+import { ExternalLink, Key, Eye, Clock, AlertTriangle, Pencil, Trash2 } from 'lucide-react';
 import { Dashboard } from '../types';
 
 interface DashboardCardProps {
@@ -25,7 +25,7 @@ export default function DashboardCard({
   onEdit,
   onDelete
 }: DashboardCardProps) {
-  const { name, vertical, description, url, owner, updateFrequency, status, metrics, lastUpdated, viewsCount } = dashboard;
+  const { name, vertical, description, url, updateFrequency, metrics, lastUpdated, viewsCount } = dashboard;
 
   // Vertical styles
   const getVerticalStyle = (vert: string) => {
@@ -41,39 +41,6 @@ export default function DashboardCard({
         return 'bg-stone-50 text-stone-800 border-neutral-200/80';
     }
   };
-
-  // Status styles
-  const getStatusStyle = (st: string) => {
-    const s = st.toLowerCase();
-    if (s === 'active' || s === 'activo') {
-      return {
-        label: 'active',
-        container: 'bg-emerald-50 text-emerald-800 border-emerald-100',
-        dot: 'bg-emerald-500'
-      };
-    }
-    if (s === 'under review' || s === 'en revisión') {
-      return {
-        label: 'under review',
-        container: 'bg-amber-50 text-amber-800 border-amber-100',
-        dot: 'bg-amber-500'
-      };
-    }
-    if (s === 'vacated' || s === 'deprecated' || s === 'deprecado') {
-      return {
-        label: 'Vacated',
-        container: 'bg-rose-50 text-rose-800 border-rose-100',
-        dot: 'bg-rose-500'
-      };
-    }
-    return {
-      label: st,
-      container: 'bg-neutral-100 text-neutral-800 border-neutral-200',
-      dot: 'bg-neutral-400'
-    };
-  };
-
-  const statusStyle = getStatusStyle(status);
 
   // Frequency mapping to Spanish values
   const getFrequencyLabel = (freq: string) => {
@@ -170,14 +137,6 @@ export default function DashboardCard({
 
       {/* Bottom Section */}
       <div className="mt-auto">
-        {/* Owner info */}
-        <div className="px-6 py-3 bg-neutral-50/50 border-t border-galicia-border flex items-center text-xs text-neutral-500 font-sans">
-          <div className="flex items-center gap-1.5 max-w-full truncate" title={`Owner: ${owner}`}>
-            <User className="h-3.5 w-3.5 text-neutral-400 shrink-0" />
-            <span>Responsable: <strong className="text-galicia-dark font-semibold">{highlightText(owner, searchQuery)}</strong></span>
-          </div>
-        </div>
-
         {/* Dynamic Action Bar */}
         <div className="px-6 py-3.5 bg-neutral-50 border-t border-galicia-border flex items-center gap-2">
           {/* Main Action to Power BI */}

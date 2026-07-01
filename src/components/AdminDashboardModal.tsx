@@ -25,9 +25,7 @@ export default function AdminDashboardModal({
   const [vertical, setVertical] = useState<'Desarrollo' | 'Retención' | 'Adquisición' | 'Cross equipo'>('Desarrollo');
   const [description, setDescription] = useState<string>('');
   const [url, setUrl] = useState<string>('');
-  const [owner, setOwner] = useState<string>('');
   const [updateFrequency, setUpdateFrequency] = useState<Dashboard['updateFrequency']>('daily');
-  const [status, setStatus] = useState<Dashboard['status']>('active');
   const [metricsText, setMetricsText] = useState<string>('');
   const [tagsText, setTagsText] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -42,8 +40,7 @@ export default function AdminDashboardModal({
         setVertical(dashboard.vertical);
         setDescription(dashboard.description);
         setUrl(dashboard.url);
-        setOwner(dashboard.owner);
-        
+
         // Map Spanish values to the new standard to align with select dropdowns
         let f = dashboard.updateFrequency;
         if (f === 'Diaria') f = 'daily';
@@ -53,12 +50,6 @@ export default function AdminDashboardModal({
         else if (f === 'Tiempo Real') f = 'real-time';
         setUpdateFrequency(f);
 
-        let s = dashboard.status;
-        if (s === 'Activo') s = 'active';
-        else if (s === 'En revisión') s = 'under review';
-        else if (s === 'Deprecated') s = 'Vacated';
-        setStatus(s);
-
         setMetricsText(dashboard.metrics.join(', '));
         setTagsText(dashboard.tags.join(', '));
       } else {
@@ -67,9 +58,7 @@ export default function AdminDashboardModal({
         setVertical('Desarrollo');
         setDescription('');
         setUrl('https://app.powerbi.com/view?r=');
-        setOwner('Equipo BI');
         setUpdateFrequency('daily');
-        setStatus('active');
         setMetricsText('');
         setTagsText('');
       }
@@ -95,10 +84,6 @@ export default function AdminDashboardModal({
       setError('Ingresa un link directo de Power BI Cloud válido (debe empezar con http:// o https://).');
       return;
     }
-    if (!owner.trim()) {
-      setError('El dueño o equipo responsable es requerido.');
-      return;
-    }
 
     // Parse metrics and tags
     const metrics = metricsText
@@ -118,9 +103,7 @@ export default function AdminDashboardModal({
       vertical,
       description: description.trim(),
       url: url.trim(),
-      owner: owner.trim(),
       updateFrequency,
-      status,
       metrics: metrics.length > 0 ? metrics : ['General'],
       tags: tags.length > 0 ? tags : [vertical.toLowerCase().replace(' ', '')],
       lastUpdated: dashboard ? (dashboard.lastUpdated || 'Hace momentos') : 'Recién creado',
@@ -252,23 +235,8 @@ export default function AdminDashboardModal({
               </p>
             </div>
 
-            {/* Owner & Parameters Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label htmlFor="dash-owner" className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                  Dueño o Responsable
-                </label>
-                <input
-                  id="dash-owner"
-                  type="text"
-                  placeholder="Ej. Equipo Retención"
-                  value={owner}
-                  onChange={(e) => setOwner(e.target.value)}
-                  className="w-full px-3 py-2 border border-neutral-200 rounded-xl bg-neutral-50/50 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-neutral-800"
-                  required
-                />
-              </div>
-
+            {/* Update frequency */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="dash-freq" className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
                   Actualización
@@ -284,22 +252,6 @@ export default function AdminDashboardModal({
                   <option value="monthly">monthly</option>
                   <option value="annual">annual</option>
                   <option value="real-time">real-time</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="dash-status" className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                  Estado
-                </label>
-                <select
-                  id="dash-status"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value as any)}
-                  className="w-full px-3 py-2 border border-neutral-200 rounded-xl bg-neutral-50/50 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-neutral-800"
-                >
-                  <option value="active">active</option>
-                  <option value="under review">under review</option>
-                  <option value="Vacated">Vacated</option>
                 </select>
               </div>
             </div>

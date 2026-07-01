@@ -165,8 +165,8 @@ export default function RequestAccessModal({
                     ¡Solicitud enviada con éxito!
                   </h3>
                   <p className="font-sans text-sm text-neutral-600 max-w-sm mb-6">
-                    {formType === 'access' && `Tu solicitud de acceso para "${selectedDashboardObj?.name || 'el tablero seleccionado'}" fue enviada al owner (${selectedDashboardObj?.owner || 'BI Team'}). Te notificaremos por mail.`}
-                    {formType === 'error' && `Gracias por reportar la incidencia. El equipo de BI y el owner (${selectedDashboardObj?.owner || 'Soporte'}) ya han sido alertados.`}
+                    {formType === 'access' && `Tu solicitud de acceso para "${selectedDashboardObj?.name || 'el tablero seleccionado'}" fue enviada al equipo de BI. Te notificaremos por mail.`}
+                    {formType === 'error' && `Gracias por reportar la incidencia. El equipo de BI ya fue alertado.`}
                     {formType === 'suggest' && `¡Excelente sugerencia! Nuestro equipo de datos evaluará la viabilidad de este nuevo tablero y se pondrá en contacto pronto.`}
                   </p>
                   <button
@@ -205,8 +205,7 @@ export default function RequestAccessModal({
                         ))}
                       </select>
                       {selectedDashboardObj && (
-                        <p className="mt-1.5 text-xs text-neutral-500 flex items-center justify-between px-1">
-                          <span>Owner: <strong className="text-neutral-700">{selectedDashboardObj.owner}</strong></span>
+                        <p className="mt-1.5 text-xs text-neutral-500 flex items-center justify-end px-1">
                           <span>Frecuencia: <strong className="text-neutral-700">{selectedDashboardObj.updateFrequency}</strong></span>
                         </p>
                       )}
