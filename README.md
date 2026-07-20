@@ -47,3 +47,20 @@ Este proyecto es una app estática de Vite + React. Vercel detecta el framework 
 Una vez deployado, compartí la URL con tu equipo: van a poder ver todos los tableros sin
 necesidad de iniciar sesión. Vos entrás con el botón **Admin** del header y tu email/contraseña
 de Supabase para agregar, editar o eliminar tableros.
+
+## 4. Evitar que Supabase se pause por inactividad
+
+El plan free de Supabase pausa el proyecto automáticamente si pasan **7 días sin requests**
+a la API. Este repo incluye un workflow de GitHub Actions
+([`.github/workflows/supabase-keepalive.yml`](.github/workflows/supabase-keepalive.yml)) que
+hace una consulta liviana a la tabla `dashboards` cada 3 días para mantenerlo activo.
+
+Para activarlo, en GitHub andá a **Settings > Secrets and variables > Actions** en este repo
+y agregá dos secrets (mismos valores que `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`):
+
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+
+El workflow corre solo mientras el repo tenga actividad en GitHub (commits/PRs); si el repo
+también queda inactivo por más de 60 días, GitHub deshabilita los cron jobs automáticamente
+y hay que reactivarlo a mano desde la pestaña **Actions** (o hacer cualquier commit/push).
